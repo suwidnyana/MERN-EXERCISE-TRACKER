@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {post} from 'axios'
 import axios from 'axios'
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 function CreateExercise  (props) {
 
 
@@ -26,8 +27,8 @@ function CreateExercise  (props) {
     //     }
     //   }
     //   postExercises();
-console.log(exercises)
-    axios.post('http://localhost:5000/olahraga/add', exercises)
+      console.log(exercises)
+      axios.post('http://localhost:5000/olahraga/add', exercises)
       .then(res => console.log(res.data));
     
   
@@ -44,21 +45,28 @@ console.log(exercises)
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Username</label>
-          <input name="username" type="text" value={exercises.username} onChange={handleChange} className="form-control" />
+          <input name="username" type="text" 
+          value={exercises.username || ""}
+          onChange={handleChange} 
+          className="form-control" />
         </div>
         <div className="form-group">
           <label>Description</label>
-          <textarea name="description" rows="5" value={exercises.description} onChange={handleChange} className="form-control" />
+          <input name="description" rows="5" value={exercises.description || ""} onChange={handleChange} className="form-control" />
         </div>
         
         <div className="form-group">
-          <label>Duration</label>
-          <textarea name="duration" rows="5" value={exercises.duration} onChange={handleChange} className="form-control" />
+          <label>Duration In Minutes</label>
+          <input name="duration" rows="5" value={exercises.duration|| ""} onChange={handleChange} className="form-control" />
         </div>
         
         <div className="form-group">
           <label>Date</label>
-          <textarea name="date" rows="5" value={exercises.date} onChange={handleChange} className="form-control" />
+          {/* <input name="date" rows="5" value={exercises.date|| ""} onChange={handleChange} className="form-control" /> */}
+          <DatePicker
+              selected={exercises.date}
+              onChange={handleChange}
+            />
         </div>
         
         

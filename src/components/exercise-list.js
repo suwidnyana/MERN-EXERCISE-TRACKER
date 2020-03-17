@@ -29,11 +29,41 @@ function ExerciseList() {
         {exercises.map((exercise) => {
           return(
             <div key={exercise._id}>
-              <small>_id: {exercise._id}</small>
-              <small>username: {exercise.username}</small>
-              <small>description: {exercise.description}</small>
-              <small>duration: {exercise.duration}</small>
+              <table className="table">
+              <thead className="thead-light">
+                <tr>
+                  {/* <th>Id</th> */}
+                  <th>Username</th>
+                  <th>Description</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      {/* <th>{exercise._id}</th> */}
+                      <th>{exercise.username}</th>
+                      <th>{exercise.description}</th>
+                      <th>{exercise.duration}</th>
+                  </tr>
+              </tbody>
+              </table>             
               <hr/>
+              
+              
+              {/* <table className="table">
+          <thead className="thead-light">
+            <tr>
+              <th>Username</th>
+              <th>Description</th>
+              <th>Duration</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.exerciseList() }
+          </tbody>
+        </table> */}
             </div>
           )     
         })}
