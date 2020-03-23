@@ -8,9 +8,32 @@ function CreateExercise  (props) {
 
     const initialState = { username: '', description: '', duration: 0, date: new Date() }
     const [exercises, setExercise] = useState([initialState])
+    const [users, setUsers] = useState([]);
+
+
+    const getUsers = async () => {
+        let res = await axios.get(`http://localhost:5000/users`)
+        
+        setUsers(res.data)
+
+    }
+
+    
+    useEffect(  ()  => 
+    {
+        getUsers()
+    }, []);
 
     function handleChange(event) { 
+      console.log(event.target.name);
       setExercise({...exercises, [event.target.name]: event.target.value})
+    }
+
+
+    function handleDatePicker(event) 
+    {
+      setExercise({...exercises, date: event})
+
     }
   
     function handleSubmit(event) { 
@@ -29,7 +52,8 @@ function CreateExercise  (props) {
     //   postExercises();
       console.log(exercises)
       axios.post('http://localhost:5000/olahraga/add', exercises)
-      .then(res => console.log(res.data));
+      .then(res => props.history.push("/"));
+      
     
   
     }
@@ -37,6 +61,8 @@ function CreateExercise  (props) {
     function handleCancel() {
       props.history.push("/olahraga");
     }
+
+
     return(
       <div>
       <h1>Create Article</h1>
@@ -44,12 +70,28 @@ function CreateExercise  (props) {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+
+
+
           <label>Username</label>
-          <input name="username" type="text" 
+          {/* <input name="username" type="text" 
           value={exercises.username || ""}
           onChange={handleChange} 
-          className="form-control" />
+          className="form-control" /> */}
+
+
+        <select name="username" className="form-control" onChange={handleChange}>
+         {users.map((user) => (
+            <option value={user.username}>
+          {user.username}
+          </option>
+
+         ))}
+        </select>
+
         </div>
+
+
         <div className="form-group">
           <label>Description</label>
           <input name="description" rows="5" value={exercises.description || ""} onChange={handleChange} className="form-control" />
@@ -65,7 +107,7 @@ function CreateExercise  (props) {
           {/* <input name="date" rows="5" value={exercises.date|| ""} onChange={handleChange} className="form-control" /> */}
           <DatePicker
               selected={exercises.date}
-              onChange={handleChange}
+              onChange={handleDatePicker}
             />
         </div>
         

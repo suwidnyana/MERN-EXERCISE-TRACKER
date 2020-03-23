@@ -17,7 +17,7 @@ function App() {
     <div className="container">
       <Navbar />
       <Route path="/" exact component={ExerciseList} />
-      <Route path="/edit:/id" exact component={EditExerciseList} />
+      <Route path="/edit/:id" exact component={EditExerciseList} />
       <Route path="/create" exact component={CreateExerciseList} />
       <Route path="/user" exact component={CreateUser} />
     </div>
