@@ -3,11 +3,32 @@ const router = require('express').Router();
 let olahraga   = require('../models/exercise.model');
 
 
-router.route('/').get((req, res)     => {
-    olahraga.find()
-    .then(olahragas => res.json(olahragas))
-    .catch(err => res.status(400).json('Error: ' + err));
-})
+
+
+router.get('/', async (req, res, next) => { //dengan gaya async await
+    try {
+      const olahragas = await olahraga.find()
+      res.json(olahragas);
+    } catch (err) {
+      //this will eventually be handled by your error handling middleware
+      next(err) 
+      res.status(400).json('Error:' + err)
+    }
+  })
+
+
+// router.route('/').get((req, res, next)     => {
+// //    const olahraga  = await olahraga.find()
+//     // .then(olahragas => res.json(olahragas))
+//     // .catch(err => res.status(400).json('Error: ' + err));
+//     try {
+//         const olahraga  = await olahraga.find()
+//         res.json(olahraga);
+//     }
+//     catch (err) {
+//         res.status(400).json('Error:' + err)
+//     }
+// })
 
 router.route('/add').post((req,res) => {
     const username = req.body.username;

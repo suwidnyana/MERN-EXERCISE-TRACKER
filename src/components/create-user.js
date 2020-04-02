@@ -18,8 +18,9 @@ function CreateUser (props) {
    
       console.log(exercises)
       axios.post('http://localhost:5000/users/add', exercises)
-      .then(res => props.history.push("/user"));
+      .then(res => props.history.push("/create"));
       setExercise('');
+
   
     }
   
