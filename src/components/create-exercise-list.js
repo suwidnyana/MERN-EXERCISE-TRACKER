@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import {post} from 'axios'
 import axios from 'axios'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -81,8 +80,8 @@ function CreateExercise  (props) {
 
 
         <select name="username" className="form-control" onChange={handleChange}>
-         {users.map((user) => (
-            <option value={user.username}>
+         {users.map((user, index) => (
+            <option key={index} value={user.username}>
           {user.username}
           </option>
 

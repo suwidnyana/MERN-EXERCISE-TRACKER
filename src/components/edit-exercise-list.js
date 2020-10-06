@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import {post} from 'axios'
 import axios from 'axios'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -31,8 +30,7 @@ function EditExerciseList  (props) {
 
     
     useEffect(  ()  => 
-    {
-        getExercises()
+    { getExercises()
         getUsers()
     }, []);
 
@@ -71,7 +69,7 @@ function EditExerciseList  (props) {
     }
   
     function handleCancel() {
-      props.history.push("/olahraga");
+      props.history.push("/");
     }
 
 
@@ -83,8 +81,6 @@ function EditExerciseList  (props) {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
 
-
-
           <label>Username</label>
           {/* <input name="username" type="text" 
           value={exercises.username || ""}
@@ -94,9 +90,7 @@ function EditExerciseList  (props) {
 
         <select name="username" className="" onChange={handleChange}>
          {users.map((user) => (
-
-            <option key={user._id} value={user.username} selected={exercises.username == user.username}>
-
+          <option key={user._id} value={user.username} defaultValue={exercises.username === user.username}>
           {user.username}
           </option>
 
@@ -118,18 +112,13 @@ function EditExerciseList  (props) {
         
         <div className="form-group">
           <label>Date</label>
-          {/* <input name="date" rows="5" value={exercises.date|| ""} onChange={handleChange} className="form-control" /> */}
           <DatePicker
               selected={exercises.date}
               onChange={handleDatePicker}
             />
         </div>
-        
-        
         <div className="btn-group">
-          <input type="submit" value="Submit" className="btn btn-primary" />
-          
-          
+          <input type="submit" value="Submit" className="btn btn-primary" />          
           <button type="button" onClick={handleCancel} className="btn btn-secondary">Cancel</button>
         </div>
       </form>
