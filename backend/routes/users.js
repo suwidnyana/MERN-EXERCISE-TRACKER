@@ -1,53 +1,12 @@
-const router = require('express').Router();
+import express from 'express';
 
-let User = require('../models/user.model');
+import {getPosts, addPosts, deleteUser} from '../controllers/users.js' 
 
+const router = express.Router();
 
-// router.route('/').get((req, res)     => {
-//     User.find()
-//     .then(users => res.json(users))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// })
-
-router.get('/', async (req, res, next) => { //dengan gaya async await
-    try {
-      const users = await User.find()
-      res.json(users);
-    } catch (err) {
-      //this will eventually be handled by your error handling middleware
-      next(err) 
-      res.status(400).json('Error:' + err)
-    }
-  })
+router.get('/', getPosts);
+router.post('/', addPosts);
+router.delete('/:id', deleteUser);
 
 
-
-// router.route('/add').post((req,res) => {
-//     const username = req.body.username;
-    
-//     const newUser = new User({username});
-    
-//     newUser.save()
-//         .then(() => res.json('User berhasil ditambahkan'))
-//         .catch((err => res.status(400).json('Error: ' + err)));
-//     })
-
-router.post('/add', async (req, res, next) => { //dengan gaya async await
-    
-    try {
-
-        
-        const username = req.body.username;
-        const newUser = new User({username});
-        
-        const result  = await newUser.save()
-        res.json(result)
-    } catch (err) {
-      //this will eventually be handled by your error handling middleware
-      res.status(400).json('Error: ' + err)
-    }
-  })
-
-
-
-module.exports = router;
+export default router;

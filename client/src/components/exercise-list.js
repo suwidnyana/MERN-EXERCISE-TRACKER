@@ -7,13 +7,7 @@ function ExerciseList(props) {
     const [exercises, setExercise] = useState([])
 
     
-  //   const getRecipes = async () => {
-  //     const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
-  //     const data = await response.json();
-  //     setRecipes(data.hits);
-  //     console.log(data.hits);
-  // }
-
+  
   const getExercise = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/olahraga/`); 
@@ -56,8 +50,6 @@ function ExerciseList(props) {
    
     return(
       <div>
-         
-      
         <div >
           <table className="table">
           <thead className="thead-light">
@@ -77,6 +69,7 @@ function ExerciseList(props) {
                   <th>{exercise.description}</th>
                   <th>{exercise.duration}</th>
                   <th> <button onClick={() => handleDelete(exercise._id)} className="btn btn-danger mr-3">Delete</button>
+                   
                    <Link to={`/edit/${exercise._id}`} className="btn btn-danger">Edit</Link> </th>
               </tr>
           ))}
