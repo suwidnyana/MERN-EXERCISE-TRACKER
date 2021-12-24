@@ -2,41 +2,38 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
 function CreateUser (props) {
-
-
+  
     const initialState = { username: '' }
-    const [exercises, setExercise] = useState([initialState])
+    const [username, setUsername] = useState(initialState)
+    const [users, setUsers] = useState([]);
+
     const [ showError, setShowError ] = useState(false)
 
     function handleChange(event) { 
-      setExercise({...exercises, [event.target.name]: event.target.value})
+      setUsername({...username, [event.target.name]: event.target.value})
     }
   
-    const getExercise = async () => {
+    const getUsers = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/`); 
       
         
-        setExercise(response.data);
+        setUsers(response.data);
         console.log(response)
        
       } catch(error) {
         console.log('error', error);
       }}
-      
-      useEffect(() => {
-          
-        getExercise();
-      }, []);
+    
       
     function handleSubmit(event) { 
    
       event.preventDefault();  
    
-      console.log(exercises)
-      axios.post('http://localhost:5000/users/add', exercises)
+      console.log(username)
+      axios.post('http://localhost:5000/users/add', username)
       .then(res => props.history.push("/create"));
-      setExercise('');
+      setUsers('');
       setShowError(true)
   
     }
@@ -48,12 +45,20 @@ function CreateUser (props) {
     async function handleDelete(id) { 
       try {
         await axios.delete(`http://localhost:5000/users/${id}`); 
-        getExercise()
+        getUsers()
       } catch(error) {
         console.error(error);
       }
 
     }
+
+
+    useEffect(() => {
+          
+      getUsers();
+    }, []);
+
+
     return(
       <>
         
@@ -64,7 +69,7 @@ function CreateUser (props) {
         <div className="form-group">
           <label>Username</label>
           <input name="username" type="text" 
-          value={exercises.username || ""}
+          value={username.username || ""}
           onChange={handleChange} 
           className="form-control" />
         </div>  
@@ -81,18 +86,20 @@ function CreateUser (props) {
       <table className="table">
           <thead className="thead-light">
             <tr>
-              {/* <th>Id</th> */}
+              <th>Id</th>
               <th>Username</th>
             </tr>
           </thead>
           <tbody>
-          {exercises.map((exercise, index) => (
+          {users.map((exercise, index) => (
               <tr key={index}>
-                  {/* <th>{exercise._id}</th> */}
+                 
                   <th>{exercise.username}</th>
                   <th> <button onClick={() => handleDelete(exercise._id)} className="btn btn-danger mr-3">Delete</button></th>
               </tr>
           ))}
+
+    
           </tbody>
           </table>   
     </>
