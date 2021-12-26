@@ -7,10 +7,10 @@ Choose the right branch in this repository to get the code for the different par
 
 Install all dependencies
 ```sh
-yarn install
+yarn install or npm install
 ```
 
 Run the server
 ```sh
-nodemon server.js
+npm start
 ```
