@@ -1,15 +1,18 @@
-import express from 'express';
+// import express from 'express';
+// const express = require('express');
 
-import {getExercises, addExercise, deleteExercise, searchExercise} from '../controllers/exercises.js' 
+// // import {getExercises, addExercise, deleteExercise, searchExercise} from '../controllers/exercises.js' 
+// const { getExercises, addExercise, deleteExercise, searchExercise } = require("../controllers/exercises");
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/', getExercises);
-router.post('/add', addExercise);
-router.delete('/:id', deleteExercise);
-router.get('/:id', searchExercise)
+// router.get('/', getExercises);
+// router.post('/add', addExercise);
+// router.delete('/:id', deleteExercise);
+// router.get('/:id', searchExercise)
 
-export default router;
+// // export default router;
+// module.exports = router
 
 
 

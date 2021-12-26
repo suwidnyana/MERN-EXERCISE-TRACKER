@@ -1,28 +1,29 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv'
-import exerciseRouter from './routes/exercises.js';
-import userRouter from './routes/users.js';
+// import express from 'express';
+// import mongoose from 'mongoose';
+// import cors from 'cors';
+// import dotenv from 'dotenv'
+// import exerciseRouter from './routes/exercises.js';
+// import userRouter from './routes/users.js';
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv')
+const exerciseRouter = require('./routes/exercises')
+const userRouter = require('./routes/users')
 dotenv.config()
 
+require("./services/cache")()
 
 
-// const exerciseRouter = require('./routes/exercises')
-// const userRouter = require('./routes/users')
-// const express = require('express');
-// const cors = require('cors');
-// const mongoose = require('mongoose');
 
 
-// require('dotenv').config();
 
 const app = express();
+app.use(express.json());
 
-const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
 
 
 const uri = process.env.ATLAS_URI;
@@ -35,9 +36,11 @@ connection.once('open',  () => {
 })
 
 
-app.use('/olahraga', exerciseRouter);
+// app.use('/olahraga', exerciseRouter);
 app.use('/users', userRouter);
 
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server berjalan di port: ${port}`);
 })
+

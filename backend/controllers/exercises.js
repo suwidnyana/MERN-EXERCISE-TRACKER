@@ -1,7 +1,10 @@
-import express from 'express';
+// import Exercise from '../models/exercise.model.js';
+const Exercise = require('./models/exercise.model');
 
-import Exercise from '../models/exercise.model.js';
-const router = express.Router();
+module.exports = {
+
+}
+
 
 export const getExercises = async (req, res, next) => { 
     try {
@@ -71,4 +74,3 @@ export const deleteExercise =  async(req, res) => {
 
 
 
-export default router;
