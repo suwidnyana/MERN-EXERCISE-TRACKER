@@ -1,13 +1,18 @@
-// import express from 'express';
+const usersController = require("../controllers/users");
 const express = require('express');
 
 // import {getPosts, addPosts, deleteUser} from '../controllers/users.js' 
-const users = require("../controllers/users");
 const router = express.Router();
 
-router.get('/', users.getPosts);
-router.post('/add', users.addPosts);
-router.delete('/:id', users.deleteUser);
+router.get('/', (req,res) => {
+    usersController.getPost(req, res)
+});
+router.post('/add', (req,res) => {
+    usersController.addPost(req, res)
+});
+router.delete('/:id', (req,res) => {
+    usersController.deletePost(req, res)
+});
 
 
 // export default router;

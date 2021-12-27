@@ -1,23 +1,38 @@
 // import Exercise from '../models/exercise.model.js';
-const Exercise = require('./models/exercise.model');
+const Exercise = require('../models/exercise.model');
 
+const RedisCache = require("../utils/redisChace");
 module.exports = {
-
-}
-
-
-export const getExercises = async (req, res, next) => { 
-    try {
-        const olahragas = await Exercise.find()
-        res.json(olahragas);
+  async getExercises (req, res, next)  { 
+    try { 
+      
+    console.log("Success fetch from database");
+        
+    const redis_key = "MERN-olahraga";
+  
+    const { reply } = await RedisCache.get(redis_key);
+  
+    if (reply) {
+      // cache available
+      res.status(200).send(reply);  
+    } else {
+      // get data form db
+      const olahragas = await Exercise.find()
+  
+      // set redis cache
+      RedisCache.set(redis_key, JSON.stringify(olahragas));
+  
+      res.status(200).send(olahragas);
+    }
+        
       } catch (err) {
         //this will eventually be handled by your error handling middleware
         next(err) 
         res.status(400).json('Error:' + err)
       }
-}
+  },
 
-export const addExercise = async (req, res) => { 
+  async addExercise (req, res)  { 
     try {
         const username = req.body.username;
         const description = req.body.description;
@@ -36,10 +51,8 @@ export const addExercise = async (req, res) => {
       //this will eventually be handled by your error handling middleware
       res.status(400).json('Error: ' + err)
     }
-}
-
-
-export const searchExercise = async(req, res) => {
+},
+async searchExercise (req, res)  {
   try {
    const olahraga = await Exercise.findById(req.params.id)
     res.json(olahraga)
@@ -49,9 +62,9 @@ export const searchExercise = async(req, res) => {
   } catch(err) {
       res.status(400).json('Error: ' + err)
   }
-}
+},
 
-export const deleteExercise =  async(req, res) => {
+async deleteExercise (req, res)  {
   try {
 
     const olahraga = await Exercise.findByIdAndDelete(req.params.id)
@@ -71,6 +84,10 @@ export const deleteExercise =  async(req, res) => {
     res.status(400).json('Error: ' + err)
   }
 }
+
+}
+
+
 
 
 

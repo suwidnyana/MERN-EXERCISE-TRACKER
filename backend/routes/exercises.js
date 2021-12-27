@@ -1,18 +1,18 @@
 // import express from 'express';
-// const express = require('express');
+const express = require('express');
 
 // // import {getExercises, addExercise, deleteExercise, searchExercise} from '../controllers/exercises.js' 
-// const { getExercises, addExercise, deleteExercise, searchExercise } = require("../controllers/exercises");
+const exercisesController = require("../controllers/exercises");
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/', getExercises);
-// router.post('/add', addExercise);
-// router.delete('/:id', deleteExercise);
-// router.get('/:id', searchExercise)
+router.get('/', exercisesController.getExercises);
+router.post('/add', exercisesController.addExercise);
+router.delete('/:id', exercisesController.deleteExercise);
+router.get('/:id', exercisesController.searchExercise)
 
 // // export default router;
-// module.exports = router
+module.exports = router
 
 
 

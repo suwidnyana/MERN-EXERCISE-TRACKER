@@ -12,18 +12,11 @@ const dotenv = require('dotenv')
 const exerciseRouter = require('./routes/exercises')
 const userRouter = require('./routes/users')
 dotenv.config()
-
-require("./services/cache")()
-
-
-
-
+const port = process.env.PORT || 5000;
 
 const app = express();
-app.use(express.json());
 
 
-app.use(cors());
 
 
 const uri = process.env.ATLAS_URI;
@@ -36,10 +29,10 @@ connection.once('open',  () => {
 })
 
 
-// app.use('/olahraga', exerciseRouter);
+app.use('/olahraga', exerciseRouter);
 app.use('/users', userRouter);
 
-const port = process.env.PORT || 5000;
+
 app.listen(port, () => {
     console.log(`Server berjalan di port: ${port}`);
 })
