@@ -12,6 +12,9 @@ const dotenv = require('dotenv')
 const exerciseRouter = require('./routes/exercises')
 const userRouter = require('./routes/users')
 dotenv.config()
+
+
+require('./services/redis')()
 const port = process.env.PORT || 5000;
 
 const app = express();
@@ -20,11 +23,12 @@ const app = express();
 
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true
+mongoose.connect(uri, {
+    useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true
 });
 
 const connection = mongoose.connection;
-connection.once('open',  () => {
+connection.once('open', () => {
     console.log("MongoDB database koneksi berhasil");
 })
 
